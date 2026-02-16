@@ -1,4 +1,4 @@
-Def main():
+def main():
     name = input("Enter full name: ")
     city = input("Enter city: ")
     birth_year = int(input("Enter birth year: "))
@@ -7,16 +7,17 @@ Def main():
 
     age = current_year - birth_year
 
-    foods_list = [food.strip() for food in foods_raw.split(',')]
+    foods_list = [food.strip() for food in foods_raw.split(',') if food.strip()]
     foods_set = set(foods_list)
 
     profile_dict = {
-	    'name': name,
-	    'city': city,
-	    'age': age,
-	    'foods': foods_list
+        'name': name,
+        'city': city,
+        'age': age,
+        'foods': foods_list
     }
-    summary_tuple = tuple(name, age, city)
+    
+    summary_tuple = (name, age, city)
 
     print("--------------------")
     print(f"Name: {name}")
