@@ -1,0 +1,100 @@
+name: Autograding Tests
+'on':
+- push
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: test_01_case_basic
+      id: test_01_case_basic
+      uses: classroom-resources/autograding-python-grader@v1
+      with:
+        timeout: 10
+        max-score: 1
+        setup-command: python test_01_case_basic.py
+    - name: test_02_case_spaces
+      id: test_02_case_spaces
+      uses: classroom-resources/autograding-python-grader@v1
+      with:
+        timeout: 10
+        max-score: 1
+        setup-command: python test_02_case_spaces.py
+    - name: test_03_case_three
+      id: test_03_case_three
+      uses: classroom-resources/autograding-python-grader@v1
+      with:
+        timeout: 10
+        max-score: 1
+        setup-command: python test_03_case_three,py
+    - name: test_04_case_duplicates
+      id: test_04_case_duplicates
+      uses: classroom-resources/autograding-python-grader@v1
+      with:
+        timeout: 10
+        max-score: 1
+        setup-command: python test_04_case_duplicates.py
+    - name: test_05_case_many
+      id: test_05_case_many
+      uses: classroom-resources/autograding-python-grader@v1
+      with:
+        timeout: 10
+        max-score: 1
+        setup-command: python test_05_case_many,py
+    - name: test_06_case_one
+      id: test_06_case_one
+      uses: classroom-resources/autograding-python-grader@v1
+      with:
+        timeout: 10
+        max-score: 1
+        setup-command: python test_06_case_one,py
+    - name: test_07_case_mixed
+      id: test_07_case_mixed
+      uses: classroom-resources/autograding-python-grader@v1
+      with:
+        timeout: 10
+        max-score: 1
+        setup-command: python test_07_case_mixed,py
+    - name: test_08_case_symbols
+      id: test_08_case_symbols
+      uses: classroom-resources/autograding-python-grader@v1
+      with:
+        timeout: 10
+        max-score: 1
+        setup-command: python test_08_case_symbols.py
+    - name: test_09_case_numbers
+      id: test_09_case_numbers
+      uses: classroom-resources/autograding-python-grader@v1
+      with:
+        timeout: 10
+        max-score: 1
+        setup-command: python test_09_case_numbers.py
+    - name: test_10_case_multiword
+      id: test_10_case_multiword
+      uses: classroom-resources/autograding-python-grader@v1
+      with:
+        timeout: 10
+        max-score: 1
+        setup-command: python test_10_case_multiword.py
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        TEST_01_CASE_BASIC_RESULTS: "${{steps.test_01_case_basic.outputs.result}}"
+        TEST_02_CASE_SPACES_RESULTS: "${{steps.test_02_case_spaces.outputs.result}}"
+        TEST_03_CASE_THREE_RESULTS: "${{steps.test_03_case_three.outputs.result}}"
+        TEST_04_CASE_DUPLICATES_RESULTS: "${{steps.test_04_case_duplicates.outputs.result}}"
+        TEST_05_CASE_MANY_RESULTS: "${{steps.test_05_case_many.outputs.result}}"
+        TEST_06_CASE_ONE_RESULTS: "${{steps.test_06_case_one.outputs.result}}"
+        TEST_07_CASE_MIXED_RESULTS: "${{steps.test_07_case_mixed.outputs.result}}"
+        TEST_08_CASE_SYMBOLS_RESULTS: "${{steps.test_08_case_symbols.outputs.result}}"
+        TEST_09_CASE_NUMBERS_RESULTS: "${{steps.test_09_case_numbers.outputs.result}}"
+        TEST_10_CASE_MULTIWORD_RESULTS: "${{steps.test_10_case_multiword.outputs.result}}"
+      with:
+        runners: test_01_case_basic,test_02_case_spaces,test_03_case_three,test_04_case_duplicates,test_05_case_many,test_06_case_one,test_07_case_mixed,test_08_case_symbols,test_09_case_numbers,test_10_case_multiword
